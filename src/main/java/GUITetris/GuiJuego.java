@@ -33,12 +33,13 @@ import javax.swing.JOptionPane;
  * @author jrqui
  */
 public class GuiJuego extends JFrame implements ActionListener, KeyListener{
+
     private Logica game;
     private String[] player;
     private Escritor escribe;
     Font fuente = new Font("Castellar", 3 , 14);
-    private JLabel[][] matrizLabel = new JLabel[20][10];
-    private JLabel[][] matrizLabel2 = new JLabel[6][6];
+    private JLabel[][] matrizLabel = new JLabel[20][10]; // Matriz de labels del juego
+    private JLabel[][] matrizLabel2 = new JLabel[6][6]; // Matriz donde se muestra la ficha siguiente
     
     
     private JPanel matrizPan;
@@ -77,7 +78,8 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
     private int posInY = 0;
     private int posInY2 = 0;
     Border raisedbevel = BorderFactory.createBevelBorder(1, Color.DARK_GRAY , Color.BLACK);
-    
+
+    /* Esta mierda le da tamaño a cada cuadrito del tetris :v */
     public void tamañoLabel(int cantX, int cantY){
         tamX = 300/cantX;
         tamY = 600/cantY;
@@ -90,7 +92,10 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
     public void setEstado(int estado) {
         this.estado = estado;
     }
-    
+
+    /* Este metodo se encarga de llenar cada label con un '1' en ambas matrices
+     * ademas las colorea pa que se vean lindas como su mami xd */
+
     public void crearMatriz(){
         for(int i = 0; i<20;i++){
             for(int j = 0; j<10; j++){
@@ -126,7 +131,11 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         }
         
     }
-    
+
+    /* Ok, aqui es donde le decia que tengo dos matrices una logica
+     * y una grafica entonces serian 4 matrices en total :v
+     * pues esto las iguala pa que siempre esten coordinadas.*/
+
     public void igualarMatrices(){
         for(int i = 0; i<20;i++){
             for(int j = 0; j<10; j++){
@@ -140,6 +149,11 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         }
        
     }
+
+    /**Las matrices estan llenas de numeros, por lo cual cada ficha tiene un numero asociado,
+     * luego cada que la matriz se actualiza toca pintarla pa que no se vean los numeros
+     * y para que le cambie el color a la casilla de negro a x color */
+
     public void pintarMatriz(JLabel[][] matriz){
         for(int i = 0; i<matriz.length;i++){
             for(int j = 0; j<matriz[i].length; j++){
@@ -178,6 +192,8 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
             }
         }
     }
+
+    /*Este metodo evalua el estado del juego de un jugador especifico y guarda resultados */
     public void mostrarResultado( Logica juego, String[] jugador) throws IOException{
         if(juego.getEstado()==3){
             JOptionPane.showMessageDialog(null, "Has Perdido" , "Perdedor" , JOptionPane.ERROR_MESSAGE);
@@ -196,6 +212,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
             }
         }
     }
+
     //Actualiza los datos en la pantalla para saber el puntaje y demas.
     public void actualizarDatos(String[]jugador){
         puntaje.setText(jugador[3]);
@@ -205,6 +222,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         ultimoPuntaje.setText(jugador[7]);
         nivel.setText(jugador[8]);
     }
+    //Contructor -------------------------------------------------------------------------------------------------------
     public GuiJuego(String[] jugador){
         escribe = new Escritor();
         player = jugador;
@@ -347,6 +365,10 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         timer = new Timer();
         task = new TimerTask() {
             @Override
+            /* Aqui es donde se evalua el estado de la interfaz para saber si se tiene que actualizar la matriz
+            *  actualiza datos de jugador dependiendo del puntaje o muestra resultado segun sea el caso :v,
+            *  se ejecuta bastante creo, asi que consume memoria, deberiamos optimizar eso :v */
+
             public void run() {
                 if(estado == 1 ){
                     igualarMatrices();
@@ -376,6 +398,9 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        // Botones
+
         if(e.getActionCommand().equals("jugar")){
             estado = 1;
             game.setEstado(1);
@@ -401,6 +426,9 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        //Manejo de las fichas con las flechas y la barra espaciadora :v
+
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             if(!game.fichaActual.bloqueo){
                 if(game.fichaActual.ubicacion){

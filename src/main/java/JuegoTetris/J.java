@@ -13,8 +13,7 @@ import java.util.ArrayList;
  * @author jrqui
  */
 public class J extends Fichas{
-    
-    
+
     public void crearFicha() {
         for(int i = 0; i<3 ; i++){
             ArrayList<Integer> columna = new ArrayList();

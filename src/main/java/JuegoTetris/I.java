@@ -13,7 +13,9 @@ import java.util.ArrayList;
  * @author jrqui
  */
 public class I extends Fichas{
-    
+
+    //Con esto se crea la ficha I, es un arreglo lleno de numeros :v
+
     public void crearFicha() {
         for(int i = 0; i<4 ; i++){
             ArrayList<Integer> columna = new ArrayList();
@@ -34,6 +36,8 @@ public class I extends Fichas{
             matrizFicha.add(columna);
         }
     }
+
+    //Este se encarga de darle el giro a la ficha lo cual es la mayor fuente de bugs
     public void girarFicha(int[][] matriz){
         saberPosArri(matriz,this); 
         for(int i = fila ; i<fila+1;i++){
@@ -72,7 +76,8 @@ public class I extends Fichas{
             }
         }
     }
-    
+
+    //Esto mete la ficha dentro de la matriz logica
     @Override
     public void ubicarFicha(int[][] matriz) {
         for (int i = 0; i < 4; i++) {
@@ -84,7 +89,8 @@ public class I extends Fichas{
         ubicacion = true;
         movimiento = false;
     }
-    
+
+    //Este la mueve horizontalmente a la derecha
     public void moverFichaDer(int[][] matriz){
         if(analizarBordeDerecho(matriz)){
             for(int i = 0; i<matriz.length; i++){
@@ -100,7 +106,8 @@ public class I extends Fichas{
             }
         }
     }
-    
+
+    //Este la mueve horizontalmente a la derecha
     public void moverFichaIzq(int[][] matriz) {
         if(analizarBordeIzquierdo(matriz)){
             for(int i = 0; i<matriz.length; i++){
@@ -116,6 +123,8 @@ public class I extends Fichas{
             }
         }
     }
+
+    //Busca al lado derecho de la ficha para saber si se puede mover pa alla
     public boolean analizarBordeDerecho(int[][]matriz){
         boolean validacion = true;
         saberPosAba(matriz,this);
@@ -130,7 +139,8 @@ public class I extends Fichas{
         }
         return validacion;
     }
-    
+
+    //Busca al lado izquierdo de la ficha para saber si se puede mover pa alla
     public boolean analizarBordeIzquierdo(int[][]matriz){
         boolean validacion = true;
         saberPosAba(matriz,this);
@@ -145,7 +155,8 @@ public class I extends Fichas{
         }
         return validacion;
     }
-    
+
+    //Analiza por debajo de la ficha pa ver si puede seguir bajando
     public boolean analizarBordeAbajo(int[][] matriz){
         boolean validacion = true;
         saberPosAba(matriz,this);
@@ -160,9 +171,11 @@ public class I extends Fichas{
         }
         return validacion;
     }
+
+    //Mueve la ficha pa abajo :v
     public void moverFichaAba(int[][]matriz){
+
         movimiento = true;
-        
         saberPosAba(matriz,this);
         if(fila != matriz.length-1){
             if(analizarBordeAbajo(matriz)){
@@ -184,6 +197,8 @@ public class I extends Fichas{
             bloquearFicha(matriz,this);
         }
     }
+
+    //Despues de que la ficha se bloquea en la matriz se resetea el objeto :v
     public void reset(){
        var = true;
        movimiento = false;
@@ -197,6 +212,7 @@ public class I extends Fichas{
        ubicacion = false;
        bloqueo = false;
     }
+    //Constructor :v
     public I(){
        var = true;
        movimiento = false;

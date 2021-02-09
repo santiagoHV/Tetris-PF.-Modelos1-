@@ -12,6 +12,8 @@ import java.util.ArrayList;
  * @author jrqui
  */
 public abstract class Fichas {
+    /* Aqui empieza lo chido puta
+     * Estos son los metodos que se heredan y manejan cada una de las fichas */
     public abstract void crearFicha();
     public abstract void ubicarFicha(int[][] matriz);
     public abstract void moverFichaIzq(int[][] matriz);
@@ -21,7 +23,7 @@ public abstract class Fichas {
     public abstract void reset();
     public abstract boolean analizarBordeAbajo(int[][] matriz);
     
-  
+    /* Toda esta basura se hereda as well */
     public boolean var;
     public boolean bloqueo;
     public boolean movimiento;
@@ -36,7 +38,8 @@ public abstract class Fichas {
     public int fila;
     public int columna;
     
-    
+    /* Bueno, con este metodo vamos a saber la posicion de la ficha analizando la matriz desde arriba
+    * de izq a derecha */
     public void saberPosArri(int[][] matriz, Fichas ficha){
         ficha.var = false;
         for(int i = 0 ; i<matriz.length ; i++){
@@ -62,7 +65,8 @@ public abstract class Fichas {
             }
         }
     }
-    
+    /* y con este vamos a saber la posicion de la ficha analizando la matriz desde abajo
+    * de izq a derecha */
     public void saberPosAba(int[][] matriz, Fichas ficha){
         ficha.var = false;
         for(int i = matriz.length-1 ; i>=0 ; i--){
@@ -79,7 +83,10 @@ public abstract class Fichas {
             }
         }
     }
-    
+
+    /*Esta mondae se encarga de bloquear la ficha cuando llega al final o
+     cuando se encuentra con otra ficha debajo*/
+
     public void bloquearFicha(int[][]matriz,Fichas ficha){
         saberPosArri(matriz,ficha);
         if(!ficha.movimiento){

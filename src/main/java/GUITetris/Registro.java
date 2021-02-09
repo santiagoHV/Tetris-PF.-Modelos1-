@@ -126,6 +126,7 @@ public class Registro extends JFrame implements ActionListener {
             this.dispose();
         }
         if(e.getActionCommand().equals("guardar")){
+            //Manejo de archivos, aburrriiiidooooo
             Escritor escribe = new Escritor();
             try {
                 FuncionesException.regVacio(usuarioRegistro.getText(), nombreRegistro.getText(), String.valueOf(passwordRegistro.getPassword()));

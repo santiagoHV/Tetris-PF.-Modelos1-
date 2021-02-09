@@ -11,6 +11,7 @@ package JuegoTetris;
  * @author jrqui
  */
 public class Jugador {
+    // Si no entiende esta clase lo agarro a patadas
     private String nombre;
     private String contraseña; 
     private int juegosJugados;
