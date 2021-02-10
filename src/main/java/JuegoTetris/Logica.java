@@ -178,6 +178,7 @@ public class Logica {
             }
         }
     }
+
     public boolean evaluarVictoria(int[][]matriz, Fichas ficha){
         boolean ganar = true;
         ficha.saberPosArri(matriz,ficha);
