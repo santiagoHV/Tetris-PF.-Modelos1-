@@ -42,7 +42,9 @@ public class GuiInicio extends JFrame implements ActionListener {
   
     
     public GuiInicio(){
-        
+
+        // Creacion de botones -----------------------------------------------------------------------------------------
+
         iniciar = new JButton(" Iniciar ");
         iniciar.setBackground(Color.BLACK);
         iniciar.setFont(fuente);
@@ -58,11 +60,14 @@ public class GuiInicio extends JFrame implements ActionListener {
         registro.setForeground(Color.WHITE);
         registro.addActionListener(this);
         registro.setActionCommand("registro");
-        
-        
+
+        //Creacion campos de texto -------------------------------------------------------------------------------------
+
         usuarioTxt = new JTextField();
         passTxt = new JPasswordField();
-        
+
+        //Creacion etiquetas de texto ----------------------------------------------------------------------------------
+
         usuarioLabel = new JLabel("Usuario");
         usuarioLabel.setForeground(Color.BLACK);
         usuarioLabel.setFont(fuente); 
@@ -109,6 +114,7 @@ public class GuiInicio extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         if(e.getActionCommand().equals("iniciar")){
+            // Manejo de archivos --------------------------------------------------------------------------------------
             Lector lee = new Lector();
             try{
                 int estado = lee.evaluarUsuarios("src/main/java/archivos/archivo.txt", usuarioTxt.getText(), String.valueOf(passTxt.getPassword()));

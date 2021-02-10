@@ -66,7 +66,7 @@ public class Logica {
         this.estado2 = estado2;
     }
     
-
+    //Con esto se crea la matriz logica llena de 0's
     public void iniciarMatriz(int[][]matriz) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
@@ -74,6 +74,8 @@ public class Logica {
             }
         }
     }
+    /* Aqui se manejan los niveles, en cada nivel se aumenta la velocidad con la que caen las fichas, y
+    *  asi mismo el puntaje necesario para ganar cada lvl*/
     public void niveles(String[]jugador){
         nivel = Integer.parseInt(jugador[8]);
         switch(nivel){
@@ -102,7 +104,7 @@ public class Logica {
                 break;
         }
     }
-
+    //Añade las fichas en un arreglo de fichas :v
     public void addFichas() {
         fichas.add(o);
         fichas.add(iF);
@@ -112,10 +114,13 @@ public class Logica {
         fichas.add(jF);
         fichas.add(t);
     }
+    //Escoge una ficha al azar del arreglo
     public void escogerFicha() {
-        in1 = r1.nextInt(6);
+        in1 = r1.nextInt(7);
         fichaSig = fichas.get(in1);
     }
+
+    //Este analiza la matriz en busca de una matriz llena de numeros diferentes de 0
     public void buscarLineaLlena(int[][] matriz){
         lineaLlena = 0;
         boolean lineaLlenaValidacion  = true;
@@ -134,6 +139,7 @@ public class Logica {
             }
         }
     }
+    //Este limpia la linea como diomedes :v
     public void limpiarLinea(int linea ,int[][]matriz){
         for(int i = linea; i<linea+1;i++){
             for(int j = 0; j<matriz[i].length; j++){
@@ -143,9 +149,12 @@ public class Logica {
         }
         player[3] = String.valueOf(Integer.parseInt(player[3])+100);
     }
+    //Iguala los puntos del jugador :v
     public void sumarPuntos(String[] jugador){
         jugador[3] = player[3];
     }
+
+    //Esto pues guarda los puntajes en el arreglo jugador
     public void ganar(String[] jugador){
         jugador[7] = String.valueOf(Integer.parseInt(player[3]));
         jugador[3] = String.valueOf(0);
@@ -154,6 +163,7 @@ public class Logica {
         jugador[8] = String.valueOf(Integer.parseInt(player[8])+1);
         
     }
+    //Lo mismo que el de arriba pero este le resta por perdedor
     public void perder(String[] jugador){
         jugador[7] = String.valueOf(Integer.parseInt(player[3]));
         jugador[3] = String.valueOf(0);
@@ -161,6 +171,8 @@ public class Logica {
         jugador[6] = String.valueOf(Integer.parseInt(player[6])+1);
         
     }
+
+    //Reajusta la matriz despues de quitar la linea llena
     public void ajustarMatriz(int linea, int[][]matriz){
         for(int i = linea-1; i>=0; i--){
             for(int j = 0; j<matriz[i].length; j++){
@@ -168,6 +180,7 @@ public class Logica {
             }
         }
     }
+    //Evalua la matriz en busca de lineas llenas
     public void evaluarMatriz(int[][] matriz, String[]jugador){
         buscarLineaLlena(matriz);
         if(lineaLlena!=0){
@@ -178,7 +191,7 @@ public class Logica {
             }
         }
     }
-
+    //Metodo que da la victoria o la derrota
     public boolean evaluarVictoria(int[][]matriz, Fichas ficha){
         boolean ganar = true;
         ficha.saberPosArri(matriz,ficha);
@@ -224,8 +237,9 @@ public class Logica {
         task = new TimerTask() {
             @Override
             public void run() {
+                /* Si el estado es 1 selecciona una ficha y la agrega a la matriz, luego la empieza a mover hacia
+                * abajo, marca la ficha siguiente, y la ubica en la matriz 2, luego setea el estado a 2 */
                 if(estado == 1 ){
-                    
                     fichaActual = fichaSig ;
                     fichaActual.ubicarFicha(matriz);
                     fichaActual.moverFichaAba(matriz);
@@ -235,6 +249,9 @@ public class Logica {
                     fichaSig.moverFichaAba(matrizSig);
                     estado = 2;
                 }else{
+                    /* En este estado se encarga de bajar la ficha sin agregar mas fichas mientras baja,
+                    * tambien se evalua cuando la ficha detiene movimiento si gana o no y
+                    *  dependiendo de esto se guarda la victoria o perdida*/
                     if(estado == 2){
                         fichaActual.moverFichaAba(matriz);
                         if(!fichaActual.movimiento){
@@ -266,6 +283,8 @@ public class Logica {
         task2 = new TimerTask(){
             @Override
             public void run() {
+                /* Este segundo timer es para manejar otro estado, evalua la matriz y el puntaje maximo del
+                *  jugador, si no hay lineas llenas y el puntaje es maximo se gana y se apaga el timer*/
                 if(estado2 == 1 ){
                     evaluarMatriz(matriz,player);
                     if(lineaLlena == 0){

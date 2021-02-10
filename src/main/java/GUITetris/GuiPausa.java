@@ -22,6 +22,7 @@ import javax.swing.JFrame;
  * @author jrqui
  */
 public class GuiPausa extends JFrame implements ActionListener {
+
     Font fuente = new Font("Castellar", 3 , 14);
     private GuiJuego game;
     private String[] player;
@@ -30,10 +31,8 @@ public class GuiPausa extends JFrame implements ActionListener {
     private JButton reanudar;
     private JButton instrucciones;
     private JButton salir;
-    
-    
-    
-    
+
+    //  Constructor
     public GuiPausa(String[]jugador, GuiJuego juego, Logica log){
         game = juego;
         player = jugador;
@@ -82,6 +81,7 @@ public class GuiPausa extends JFrame implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Botones y mas botones :v
         if(e.getActionCommand().equals("reanudar")){
             game.setEnabled(true);
             game.setEstado(1);
