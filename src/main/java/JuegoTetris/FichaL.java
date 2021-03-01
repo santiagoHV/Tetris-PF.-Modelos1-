@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author jrqui
  */
-public class L extends Fichas{
+public class FichaL extends Fichas{
     
     public void crearFicha() {
         for(int i = 0; i<3 ; i++){
@@ -333,7 +333,7 @@ public class L extends Fichas{
        bloqueo = false;
        ubicacion = false;
     }
-    public L(){
+    public FichaL(){
        var = true;
        movimiento = true;
        fila = 0;

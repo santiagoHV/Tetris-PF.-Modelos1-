@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author jrqui
  */
-public class I extends Fichas{
+public class FichaI extends Fichas{
 
     //Con esto se crea la ficha I, es un arreglo lleno de numeros :v
 
@@ -213,7 +213,7 @@ public class I extends Fichas{
        bloqueo = false;
     }
     //Constructor :v
-    public I(){
+    public FichaI(){
        var = true;
        movimiento = false;
        numFicha = 2;

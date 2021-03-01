@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author jrqui
  */
-public class J extends Fichas{
+public class FichaJ extends Fichas{
 
     public void crearFicha() {
         for(int i = 0; i<3 ; i++){
@@ -319,7 +319,7 @@ public class J extends Fichas{
        ubicacion = false;
     }
     
-    public J(){
+    public FichaJ(){
        var = true;
        movimiento = false;
        fila = 0;

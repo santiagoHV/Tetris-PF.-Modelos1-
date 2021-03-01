@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author jrqui
  */
-public class O extends Fichas{
+public class FichaO extends Fichas{
     public void crearFicha() {
         for(int i = 0; i<2 ; i++){
             ArrayList<Integer> columna = new ArrayList();
@@ -164,7 +164,7 @@ public class O extends Fichas{
        bloqueo = false;
        ubicacion = false;
     }
-    public O(){
+    public FichaO(){
        var = true;
        numFicha = 1;
        numFicha2 = 11;

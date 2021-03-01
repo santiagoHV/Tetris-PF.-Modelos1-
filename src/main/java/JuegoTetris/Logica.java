@@ -5,12 +5,12 @@
  */
 package JuegoTetris;
 
+import Modelo.factories.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,36 +36,119 @@ public class Logica {
     //Array donde van las fichas para elegir una al azar
     private ArrayList<Fichas> fichas;
     //Creacion de la fichas
-    private O o;
-    private I iF;
-    private S s;
-    private Z z;
-    private L l;
-    private J jF;
-    private T t;
+    private FichaO o;
+    private FichaI iF;
+    private Ficha_S s;
+    private FichaZ z;
+    private FichaL l;
+    private FichaJ jF;
+    private FichaT t;
     
 
     private Random r1;
     private int in1;
     private Fichas fichaSig;
     public Fichas fichaActual;
+    private Factory factory = new FactoryLevel1();
 
-    public int getEstado() {
-        return estado;
+    public Logica(String [] jugador) {
+        puntajeMax = "200";
+        player = jugador;
+        puntaje = 0;
+        juego = false;
+        nivel = 1;
+        lineaLlena = 0;
+        lineasLlenas = new int[20];
+        matriz = new int[20][10];
+        matrizSig = new int[6][6];
+        estado = 0;
+        estado2 = 0;
+        var = true;
+        fichas = new ArrayList();
+        r1 = new Random();
+        //Matriz llena de 0
+        iniciarMatriz(matriz);
+        iniciarMatriz(matrizSig);
+        //crea fichas
+        escogerFicha(factory);
+
+
+        timer = new Timer();
+        timer2 = new Timer();
+
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println(estado);
+                /* Si el estado es 1 selecciona una ficha y la agrega a la matriz, luego la empieza a mover hacia
+                 * abajo, marca la ficha siguiente, y la ubica en la matriz 2, luego setea el estado a 2 */
+                if(estado == 1 ){
+                    if(fichaSig == null){
+                        fichaSig = escogerFicha(factory);
+                    }
+                    fichaActual = fichaSig;
+                    fichaActual.ubicarFicha(matriz);
+                    fichaActual.moverFichaAba(matriz);
+                    fichaSig = escogerFicha(factory);
+                    iniciarMatriz(matrizSig);
+                    fichaSig.ubicarFicha(matrizSig);
+                    fichaSig.moverFichaAba(matrizSig);
+                    estado = 2;
+                }else{
+                    /* En este estado se encarga de bajar la ficha sin agregar mas fichas mientras baja,
+                     * tambien se evalua cuando la ficha detiene movimiento si gana o no y
+                     *  dependiendo de esto se guarda la victoria o perdida*/
+                    if(estado == 2){
+                        fichaActual.moverFichaAba(matriz);
+                        if(!fichaActual.movimiento){
+                            estado2 = 1;
+                            if(evaluarVictoria(matriz,fichaActual)){
+                                estado = 1;
+                                fichaActual.reset();
+                            }else{
+                                estado = 3;
+                            }
+                        }
+                    }else{
+                        if(estado == 3){
+                            perder(player);
+                            estado = 0;
+                            iniciarMatriz(matriz);
+                        }else{
+                            if(estado == 4){
+                                ganar(player);
+                                niveles(player);
+                                estado = 0;
+                                iniciarMatriz(matriz);
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        task2 = new TimerTask(){
+            @Override
+            public void run() {
+                /* Este segundo timer es para manejar otro estado, evalua la matriz y el puntaje maximo del
+                 *  jugador, si no hay lineas llenas y el puntaje es maximo se gana y se apaga el timer*/
+                if(estado2 == 1 ){
+                    evaluarMatriz(matriz,player);
+                    if(lineaLlena == 0){
+                        if(player[3].equals(puntajeMax)){
+                            estado = 4;
+                        }
+                        estado2 = 0;
+                    }
+                }
+            }
+        };
+        timer2.schedule(task2, 0, 100);
+        timer.schedule(task, 0, 1000);
+
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
 
-    public int getEstado2() {
-        return estado2;
-    }
-
-    public void setEstado2(int estado2) {
-        this.estado2 = estado2;
-    }
-    
     //Con esto se crea la matriz logica llena de 0's
     public void iniciarMatriz(int[][]matriz) {
         for (int i = 0; i < matriz.length; i++) {
@@ -80,44 +163,40 @@ public class Logica {
         nivel = Integer.parseInt(jugador[8]);
         switch(nivel){
             case 1:
+                this.factory = new FactoryLevel1();
                 puntajeMax = "200";
-                timer.schedule(task, 0,1000);
+                timer.schedule(task, 0,this.factory.retornarTiempo());//1000
                 break;
             case 2:
+                this.factory = new FactoryLevel2();
                 puntajeMax = "1000";
-                timer.schedule(task, 0,100);
+                timer.schedule(task, 0,this.factory.retornarTiempo());//100
                 break;
             case 3:
+                this.factory = new FactoryLevel3();
                 puntajeMax = "1500";
-                timer.schedule(task, 0,800);
+                timer.schedule(task, 0,this.factory.retornarTiempo());//800
                 break;
             case 4:
+                this.factory = new FactoryLevel4();
                 puntajeMax = "2000";
-                timer.schedule(task, 0,700);
+                timer.schedule(task, 0,this.factory.retornarTiempo());//700
                 break;
             case 5:
+                this.factory = new FactoryLevel5();
                 puntajeMax = "2500";
-                timer.schedule(task, 0,600);
+                timer.schedule(task, 0,this.factory.retornarTiempo());//600
                 break;
             default:
+                this.factory = new FactoryLevel1();
                 timer.schedule(task, 0,5000);
                 break;
         }
     }
-    //Añade las fichas en un arreglo de fichas :v
-    public void addFichas() {
-        fichas.add(o);
-        fichas.add(iF);
-        fichas.add(s);
-        fichas.add(z);
-        fichas.add(l);
-        fichas.add(jF);
-        fichas.add(t);
-    }
+
     //Escoge una ficha al azar del arreglo
-    public void escogerFicha() {
-        in1 = r1.nextInt(7);
-        fichaSig = fichas.get(in1);
+    public Fichas escogerFicha(Factory factory) {
+        return factory.retornarFicha();
     }
 
     //Este analiza la matriz en busca de una matriz llena de numeros diferentes de 0
@@ -200,105 +279,23 @@ public class Logica {
         }
         return ganar;
     }
-    
-    public Logica(String [] jugador) {
-        puntajeMax = "200";
-        player = jugador;
-        puntaje = 0;
-        juego = false;
-        nivel = 1;
-        lineaLlena = 0;
-        lineasLlenas = new int[20];
-        matriz = new int[20][10];
-        matrizSig = new int[6][6];
-        estado = 0;
-        estado2 = 0;
-        var = true;
-        fichas = new ArrayList();
-        r1 = new Random();
-        //Matriz llena de 0
-        iniciarMatriz(matriz);
-        iniciarMatriz(matrizSig);
-        //crea fichas
-        o = new O();
-        iF = new I();
-        s = new S();
-        z = new Z();
-        l = new L();
-        jF = new J();
-        t = new T();
-        //Añande las fichas a un array para seleccionar una
-        addFichas();
-        escogerFicha();
-        
-        
-        timer = new Timer();
-        timer2 = new Timer();
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                /* Si el estado es 1 selecciona una ficha y la agrega a la matriz, luego la empieza a mover hacia
-                * abajo, marca la ficha siguiente, y la ubica en la matriz 2, luego setea el estado a 2 */
-                if(estado == 1 ){
-                    fichaActual = fichaSig ;
-                    fichaActual.ubicarFicha(matriz);
-                    fichaActual.moverFichaAba(matriz);
-                    escogerFicha();
-                    iniciarMatriz(matrizSig);
-                    fichaSig.ubicarFicha(matrizSig);
-                    fichaSig.moverFichaAba(matrizSig);
-                    estado = 2;
-                }else{
-                    /* En este estado se encarga de bajar la ficha sin agregar mas fichas mientras baja,
-                    * tambien se evalua cuando la ficha detiene movimiento si gana o no y
-                    *  dependiendo de esto se guarda la victoria o perdida*/
-                    if(estado == 2){
-                        fichaActual.moverFichaAba(matriz);
-                        if(!fichaActual.movimiento){
-                            estado2 = 1;
-                            if(evaluarVictoria(matriz,fichaActual)){
-                                estado = 1;
-                                fichaActual.reset();
-                            }else{
-                                estado = 3;
-                            }
-                        }
-                    }else{
-                        if(estado == 3){
-                            perder(player);
-                            estado = 0;
-                            iniciarMatriz(matriz);
-                        }else{
-                            if(estado == 4){
-                                ganar(player);
-                                niveles(player);
-                                estado = 0;
-                                iniciarMatriz(matriz);
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        task2 = new TimerTask(){
-            @Override
-            public void run() {
-                /* Este segundo timer es para manejar otro estado, evalua la matriz y el puntaje maximo del
-                *  jugador, si no hay lineas llenas y el puntaje es maximo se gana y se apaga el timer*/
-                if(estado2 == 1 ){
-                    evaluarMatriz(matriz,player);
-                    if(lineaLlena == 0){
-                        if(player[3].equals(puntajeMax)){
-                            estado = 4;
-                        }
-                        estado2 = 0;
-                    }
-                }
-            }
-        };
-        timer2.schedule(task2, 0, 100);
-        timer.schedule(task, 0, 1000);
-        
+
+    public int getEstado() {
+        return estado;
     }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public int getEstado2() {
+        return estado2;
+    }
+
+    public void setEstado2(int estado2) {
+        this.estado2 = estado2;
+    }
+
+
 
 }

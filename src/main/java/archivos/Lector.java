@@ -40,6 +40,8 @@ public class Lector {
             String[] array = cadena.split("><");
             String usuario = array[0];
             String password = array[1];
+            System.out.println(usuario + password);
+            System.out.println(usuarioIng + passwordIng);
             if(usuario.equals(usuarioIng) && password.equals(passwordIng)){
                 estado = 1;
                 break;

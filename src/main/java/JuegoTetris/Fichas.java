@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author jrqui
  */
 public abstract class Fichas {
-    /* Aqui empieza lo chido puta
+    /*
      * Estos son los metodos que se heredan y manejan cada una de las fichas */
     public abstract void crearFicha();
     public abstract void ubicarFicha(int[][] matriz);

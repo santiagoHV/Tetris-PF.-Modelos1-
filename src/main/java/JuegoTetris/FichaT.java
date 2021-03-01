@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author jrqui
  */
-public class T extends Fichas{
+public class FichaT extends Fichas{
     ArrayList<ArrayList<Integer>>matrizFicha;
 
     
@@ -323,7 +323,7 @@ public class T extends Fichas{
     }
     
     
-    public T(){
+    public FichaT(){
        var = true;
        movimiento = false;
        fila = 0;
