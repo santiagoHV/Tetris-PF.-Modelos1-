@@ -224,7 +224,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         matrizPan = new JPanel();
         matrizPan2 = new JPanel();
         estado = 0;
-        
+
         jugar = new JButton("Jugar");
         jugar.addActionListener(this);
         jugar.setActionCommand("jugar");
@@ -232,7 +232,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         jugar.setFont(fuente);
         jugar.setForeground(Color.WHITE);
         jugar.setBackground(Color.BLACK);
-        
+
         pausa = new JButton("Pausa");
         pausa.addActionListener(this);
         pausa.setEnabled(false);
@@ -241,7 +241,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         pausa.setFont(fuente);
         pausa.setForeground(Color.WHITE);
         pausa.setBackground(Color.BLACK);
-        
+
         nombre1 = new JLabel("Nombre :");
         nombre1.setFont(fuente);
         nombre1.setForeground(Color.CYAN);
@@ -263,8 +263,8 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         nivel1= new JLabel("Nivel:");
         nivel1.setFont(fuente);
         nivel1.setForeground(Color.BLACK);
-        
-        
+
+
         nombre = new JLabel(player[0]);
         nombre.setFont(fuente);
         nombre.setForeground(Color.WHITE);
@@ -286,17 +286,17 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         nivel = new JLabel("1");
         nivel.setFont(fuente);
         nivel.setForeground(Color.WHITE);
-        
-        
-        
+
+
+
         tamañoLabel(10,20);
-        
+
         this.getContentPane().setLayout(null);
         this.setBounds( 50 , 50 , 900 , 700 );
         this.setFocusable(true);
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.addKeyListener(this);
-        
+
         this.getContentPane().add(nombre1);
         nombre1.setBounds( 10 , 10 , 200 , 60 );
         this.getContentPane().add(puntaje1);
@@ -311,7 +311,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         ultimoPuntaje1.setBounds( 10 , 360 , 200, 60 );
         this.getContentPane().add(nivel1);
         nivel1.setBounds( 10 , 430 , 120 , 60 );
-        
+
         this.getContentPane().add(nombre);
         nombre.setBounds( 10 , 30 , 200 , 60 );
         this.getContentPane().add(puntaje);
@@ -326,36 +326,36 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         ultimoPuntaje.setBounds( 10 , 380 , 100, 60 );
         this.getContentPane().add(nivel);
         nivel.setBounds( 10 , 450 , 120 , 60 );
-        
-        
-        
-        
-        
+
+
+
+
+
         this.getContentPane().add(matrizPan);
         matrizPan.setLayout(null);
         matrizPan.setBorder(raisedbevel);
         matrizPan.setBounds( 240 , 30 , 300 , 600 );
         matrizPan.setVisible(true);
-        
+
         this.getContentPane().add(matrizPan2);
         matrizPan2.setLayout(null);
         matrizPan2.setBorder(raisedbevel);
         matrizPan2.setBounds(590 , 30 , 180 , 180);
         matrizPan2.setVisible(true);
-        
+
         this.getContentPane().add(jugar);
         jugar.setBounds( 600 , 450 , 90 , 50 );
         this.getContentPane().add(pausa);
         pausa.setBounds( 600 , 550 , 90 , 50 );
-        
-        
-       
-        
+
+
+
+
         crearMatriz();
         igualarMatrices();
         pintarMatriz(matrizLabel);
         pintarMatriz(matrizLabel2);
-        
+
         timer = new Timer();
         task = new TimerTask() {
             @Override
@@ -381,11 +381,8 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
             }
         };
         timer.schedule(task, 0, 70);
-        
-       
-
         this.setTitle("TETRIS");
-        this.setResizable(true);      
+        this.setResizable(true);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -399,6 +396,7 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
             estado = 1;
             game.setEstado(1);
             game.setEstado2(1);
+            game.niveles(player);
             jugar.setEnabled(false);
             pausa.setEnabled(true);
         }

@@ -42,11 +42,12 @@ public class Logica {
     public Logica(String [] jugador) {
         ContextoDeEstados contextoDeEstados = new ContextoDeEstados();
 
-        puntajeMax = "200";
         player = jugador;
+        puntajeMax = "200";
+        nivel = Integer.parseInt(player[6]);
         puntaje = 0;
         juego = false;
-        nivel = 1;
+
         lineaLlena = 0;
         lineasLlenas = new int[20];
         matriz = new int[20][10];
@@ -60,7 +61,6 @@ public class Logica {
         iniciarMatriz(matrizSig);
         //crea fichas
         escogerFicha(factory);
-
 
         timer = new Timer();
         timer2 = new Timer();
@@ -126,7 +126,7 @@ public class Logica {
                 if(estado2 == 1 ){
                     evaluarMatriz(matriz,player);
                     if(lineaLlena == 0){
-                        if(player[1].equals(puntajeMax)){
+                        if(Integer.valueOf(player[1])>=Integer.valueOf(puntajeMax)){
                             estado = 4;
                         }
                         estado2 = 0;
@@ -136,7 +136,6 @@ public class Logica {
         };
         timer2.schedule(task2, 0, 100);
         timer.schedule(task, 0, 1000);
-
     }
 
 
@@ -151,7 +150,7 @@ public class Logica {
     /* Aqui se manejan los niveles, en cada nivel se aumenta la velocidad con la que caen las fichas, y
     *  asi mismo el puntaje necesario para ganar cada lvl*/
     public void niveles(String[]jugador){
-        nivel = Integer.parseInt(jugador[8]);
+        nivel = Integer.parseInt(jugador[6]);
         switch(nivel){
             case 1:
                 this.factory = new FactoryLevel1();
@@ -228,10 +227,9 @@ public class Logica {
     public void ganar(String[] jugador){
         jugador[5] = String.valueOf(Integer.parseInt(player[1]));
         jugador[1] = String.valueOf(0);
-        jugador[2] = String.valueOf(Integer.parseInt(player[2])+1) ;
+        jugador[2] = String.valueOf(Integer.parseInt(player[2])+1);
         jugador[3] = String.valueOf(Integer.parseInt(player[3])+1);
         jugador[6] = String.valueOf(Integer.parseInt(player[6])+1);
-        
     }
     //Lo mismo que el de arriba pero este le resta por perdedor
     public void perder(String[] jugador){

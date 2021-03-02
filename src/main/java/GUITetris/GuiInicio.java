@@ -80,6 +80,7 @@ public class GuiInicio extends JFrame implements ActionListener {
                 player[i] = "0";
             }
             player[0] = usuarioTxt.getText();
+            player[6] = "1";
             GuiJuego game = new GuiJuego(player);
             this.dispose();
         }
