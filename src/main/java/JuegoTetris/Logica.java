@@ -126,7 +126,7 @@ public class Logica {
                 if(estado2 == 1 ){
                     evaluarMatriz(matriz,player);
                     if(lineaLlena == 0){
-                        if(player[3].equals(puntajeMax)){
+                        if(player[1].equals(puntajeMax)){
                             estado = 4;
                         }
                         estado2 = 0;
