@@ -5,6 +5,7 @@
  */
 package JuegoTetris;
 
+import Modelo.estados.ContextoDeEstados;
 import Modelo.factories.*;
 
 import java.util.ArrayList;
@@ -33,25 +34,14 @@ public class Logica {
     private Timer timer2;
     private TimerTask task;
     private TimerTask task2;
-    //Array donde van las fichas para elegir una al azar
-    private ArrayList<Fichas> fichas;
-    //Creacion de la fichas
-    private FichaO o;
-    private FichaI iF;
-    private Ficha_S s;
-    private FichaZ z;
-    private FichaL l;
-    private FichaJ jF;
-    private FichaT t;
-    
 
-    private Random r1;
-    private int in1;
     private Fichas fichaSig;
     public Fichas fichaActual;
     private Factory factory = new FactoryLevel1();
 
     public Logica(String [] jugador) {
+        ContextoDeEstados contextoDeEstados = new ContextoDeEstados();
+
         puntajeMax = "200";
         player = jugador;
         puntaje = 0;
@@ -64,8 +54,7 @@ public class Logica {
         estado = 0;
         estado2 = 0;
         var = true;
-        fichas = new ArrayList();
-        r1 = new Random();
+
         //Matriz llena de 0
         iniciarMatriz(matriz);
         iniciarMatriz(matrizSig);
@@ -80,13 +69,13 @@ public class Logica {
         task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println(estado);
                 /* Si el estado es 1 selecciona una ficha y la agrega a la matriz, luego la empieza a mover hacia
                  * abajo, marca la ficha siguiente, y la ubica en la matriz 2, luego setea el estado a 2 */
                 if(estado == 1 ){
                     if(fichaSig == null){
                         fichaSig = escogerFicha(factory);
                     }
+                    contextoDeEstados.getEstado().moviendose();
                     fichaActual = fichaSig;
                     fichaActual.ubicarFicha(matriz);
                     fichaActual.moverFichaAba(matriz);
@@ -100,6 +89,7 @@ public class Logica {
                      * tambien se evalua cuando la ficha detiene movimiento si gana o no y
                      *  dependiendo de esto se guarda la victoria o perdida*/
                     if(estado == 2){
+                        contextoDeEstados.getEstado().moviendose();
                         fichaActual.moverFichaAba(matriz);
                         if(!fichaActual.movimiento){
                             estado2 = 1;
@@ -111,6 +101,7 @@ public class Logica {
                             }
                         }
                     }else{
+                        contextoDeEstados.getEstado().quieta();
                         if(estado == 3){
                             perder(player);
                             estado = 0;
@@ -218,7 +209,7 @@ public class Logica {
             }
         }
     }
-    //Este limpia la linea como diomedes :v
+
     public void limpiarLinea(int linea ,int[][]matriz){
         for(int i = linea; i<linea+1;i++){
             for(int j = 0; j<matriz[i].length; j++){
