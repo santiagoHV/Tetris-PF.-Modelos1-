@@ -25,7 +25,6 @@ public class GuiPausa extends JFrame implements ActionListener {
     private String[] player;
     private Logica logica;
     private JButton reanudar;
-    private JButton instrucciones;
     private JButton salir;
 
     //  Constructor
@@ -39,34 +38,24 @@ public class GuiPausa extends JFrame implements ActionListener {
         reanudar.setFocusable(false);
         reanudar.setFont(fuente);
         reanudar.setForeground(Color.WHITE);
-        reanudar.setBackground(Color.BLACK);
-        
-        instrucciones = new JButton("Instrucciones");
-        instrucciones.addActionListener(this);
-        instrucciones.setActionCommand("instrucciones");
-        instrucciones.setFocusable(false);
-        instrucciones.setFont(fuente);
-        instrucciones.setForeground(Color.WHITE);
-        instrucciones.setBackground(Color.BLACK);
-        
+        reanudar.setBackground(Color.BLUE);
+
         salir = new JButton("Salir");
         salir.addActionListener(this);
         salir.setActionCommand("salir");
         salir.setFocusable(false);
         salir.setFont(fuente);
         salir.setForeground(Color.WHITE);
-        salir.setBackground(Color.BLACK);
+        salir.setBackground(Color.RED);
         
         this.getContentPane().setLayout(null);
-        this.setBounds( 400 , 170 , 300 , 300 );
-        this.getContentPane().setBackground(Color.DARK_GRAY);
+        this.setBounds( 400 , 170 , 250 , 250 );
+        this.getContentPane().setBackground(Color.BLACK);
         
         this.getContentPane().add(reanudar);
-        reanudar.setBounds(40 , 20 , 120 , 40);
-        this.getContentPane().add(instrucciones);
-        instrucciones.setBounds(40, 50 , 120 , 40);
+        reanudar.setBounds(45 , 50 , 140 , 40);
         this.getContentPane().add(salir);
-        salir.setBounds(40 , 120 , 120 , 40);
+        salir.setBounds(45 , 100 , 140 , 40);
         
         this.setTitle("Inicio");
         this.setResizable(true);      
@@ -82,9 +71,6 @@ public class GuiPausa extends JFrame implements ActionListener {
             game.setEstado(1);
             logica.setEstado(2);
             this.dispose();
-        }
-        if(e.getActionCommand().equals("instrucciones")){
-            
         }
         if(e.getActionCommand().equals("salir")){
             game.dispose();

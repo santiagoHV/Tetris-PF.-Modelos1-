@@ -5,15 +5,10 @@
  */
 package GUITetris;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 
 /**
@@ -23,23 +18,20 @@ import javax.swing.JTextField;
 public class GuiInicio extends JFrame implements ActionListener {
 
     private JTextField usuarioTxt;
-    private JPasswordField passTxt;
     Font fuente = new Font("Castellar", 3 , 14);
     
-    
     private JLabel usuarioLabel;
-    private JLabel passLabel;
+    private JLabel lImg;
+    private Image img;
+    private ImageIcon img2;
     
     private JButton iniciar;
-    private JButton registro;
-    
-  
-    
+
     public GuiInicio(){
 
         // Creacion de botones -----------------------------------------------------------------------------------------
         iniciar = new JButton(" Iniciar ");
-        iniciar.setBackground(Color.BLACK);
+        iniciar.setBackground(Color.BLUE);
         iniciar.setFont(fuente);
         iniciar.setForeground(Color.WHITE);
         iniciar.setFocusable(false);
@@ -50,21 +42,32 @@ public class GuiInicio extends JFrame implements ActionListener {
         usuarioTxt = new JTextField();
 
         //Creacion etiquetas de texto ----------------------------------------------------------------------------------
-        usuarioLabel = new JLabel("Usuario");
-        usuarioLabel.setForeground(Color.BLACK);
-        usuarioLabel.setFont(fuente); 
+        usuarioLabel = new JLabel("Ingresa tu nombre:");
+        usuarioLabel.setForeground(Color.WHITE);
+        usuarioLabel.setFont(fuente);
+
+
+
+        //Creacion img
+        img = new ImageIcon("assets/tetris.png").getImage();
+        lImg = new JLabel();
+        lImg.setIcon(new ImageIcon(img.getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
 
         this.getContentPane().setLayout(null);
         this.setBounds( 400 , 170 , 620 , 400 );
-        this.getContentPane().setBackground(Color.DARK_GRAY);
+        this.getContentPane().setBackground(Color.BLACK);
         
         this.getContentPane().add(iniciar);
-        iniciar.setBounds( 180 , 280 , 120 , 50 );
+        iniciar.setBounds( 250 , 280 , 120 , 50 );
         this.getContentPane().add(usuarioTxt);
         usuarioTxt.setFont(fuente);
-        usuarioTxt.setBounds(180 , 170 , 260 , 30);
+        usuarioTxt.setBounds(180 , 210 , 260 , 30);
         this.getContentPane().add(usuarioLabel);
-        usuarioLabel.setBounds( 100 , 170 , 90 , 30 );
+        usuarioLabel.setBounds( 210 , 170 , 250 , 30 );
+
+        this.getContentPane().add(lImg);
+        lImg.setBounds(230,20,150,150);
+        lImg.setOpaque(false);
 
         this.setTitle("Inicio");
         this.setResizable(true);      

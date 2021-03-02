@@ -399,12 +399,12 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         // Botones
 
         if(e.getActionCommand().equals("jugar")){
+            jugar.setEnabled(false);
+            pausa.setEnabled(true);
             estado = 1;
             game.setEstado(1);
             game.setEstado2(1);
             game.niveles(player);
-            jugar.setEnabled(false);
-            pausa.setEnabled(true);
         }
         if(e.getActionCommand().equals("pausa")){
             this.setEnabled(false);
