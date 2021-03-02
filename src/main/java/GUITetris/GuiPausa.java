@@ -6,14 +6,11 @@
 package GUITetris;
 
 import JuegoTetris.Logica;
-import archivos.Escritor;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -26,7 +23,6 @@ public class GuiPausa extends JFrame implements ActionListener {
     Font fuente = new Font("Castellar", 3 , 14);
     private GuiJuego game;
     private String[] player;
-    private Escritor escribe;
     private Logica logica;
     private JButton reanudar;
     private JButton instrucciones;
@@ -37,7 +33,6 @@ public class GuiPausa extends JFrame implements ActionListener {
         game = juego;
         player = jugador;
         logica = log;
-        escribe = new Escritor();
         reanudar = new JButton("Reanudar");
         reanudar.addActionListener(this);
         reanudar.setActionCommand("reanudar");
@@ -92,15 +87,10 @@ public class GuiPausa extends JFrame implements ActionListener {
             
         }
         if(e.getActionCommand().equals("salir")){
-            try {
-                game.dispose();
-                logica.perder(player);
-                escribe.guardar("src/main/java/archivos/archivo.txt",player);
-                GuiInicio inicio = new GuiInicio();
-                this.dispose();
-            } catch (IOException ex) {
-                Logger.getLogger(GuiJuego.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            game.dispose();
+            logica.perder(player);
+            GuiInicio inicio = new GuiInicio();
+            this.dispose();
         }
     }
     

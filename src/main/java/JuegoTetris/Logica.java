@@ -217,28 +217,28 @@ public class Logica {
             }
             lineasLlenas[i] = 0;
         }
-        player[3] = String.valueOf(Integer.parseInt(player[3])+100);
+        player[1] = String.valueOf(Integer.parseInt(player[1])+100);
     }
     //Iguala los puntos del jugador :v
     public void sumarPuntos(String[] jugador){
-        jugador[3] = player[3];
+        jugador[1] = player[1];
     }
 
     //Esto pues guarda los puntajes en el arreglo jugador
     public void ganar(String[] jugador){
-        jugador[7] = String.valueOf(Integer.parseInt(player[3]));
-        jugador[3] = String.valueOf(0);
-        jugador[4] = String.valueOf(Integer.parseInt(player[4])+1) ;
-        jugador[5] = String.valueOf(Integer.parseInt(player[5])+1);
-        jugador[8] = String.valueOf(Integer.parseInt(player[8])+1);
+        jugador[5] = String.valueOf(Integer.parseInt(player[1]));
+        jugador[1] = String.valueOf(0);
+        jugador[2] = String.valueOf(Integer.parseInt(player[2])+1) ;
+        jugador[3] = String.valueOf(Integer.parseInt(player[3])+1);
+        jugador[6] = String.valueOf(Integer.parseInt(player[6])+1);
         
     }
     //Lo mismo que el de arriba pero este le resta por perdedor
     public void perder(String[] jugador){
-        jugador[7] = String.valueOf(Integer.parseInt(player[3]));
-        jugador[3] = String.valueOf(0);
+        jugador[5] = String.valueOf(Integer.parseInt(player[1]));
+        jugador[1] = String.valueOf(0);
+        jugador[2] = String.valueOf(Integer.parseInt(player[2])+1);
         jugador[4] = String.valueOf(Integer.parseInt(player[4])+1);
-        jugador[6] = String.valueOf(Integer.parseInt(player[6])+1);
         
     }
 

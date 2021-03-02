@@ -5,7 +5,6 @@
  */
 package GUITetris;
 
-import JuegoTetris.Jugador;
 import java.awt.Color;
 
 import java.awt.event.ActionEvent;
@@ -16,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import JuegoTetris.Logica;
-import archivos.Escritor;
+
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,7 +35,6 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
 
     private Logica game;
     private String[] player;
-    private Escritor escribe;
     Font fuente = new Font("Castellar", 3 , 14);
     private JLabel[][] matrizLabel = new JLabel[20][10]; // Matriz de labels del juego
     private JLabel[][] matrizLabel2 = new JLabel[6][6]; // Matriz donde se muestra la ficha siguiente
@@ -198,33 +196,29 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         if(juego.getEstado()==3){
             JOptionPane.showMessageDialog(null, "Has Perdido" , "Perdedor" , JOptionPane.ERROR_MESSAGE);
             juego.setEstado(0);
-            escribe.guardar("src/main/java/archivos/archivo.txt",jugador);
             this.dispose();
             GuiJuego gui = new GuiJuego(jugador);
         }else{
             if(juego.getEstado()==4){
                 JOptionPane.showMessageDialog(null, "Has Ganado" , "Ganador" , JOptionPane.INFORMATION_MESSAGE);
                 juego.setEstado(0);
-                escribe.guardar("src/main/java/archivos/archivo.txt",jugador);
                 this.dispose();
                 GuiJuego gui = new GuiJuego(jugador);
-                
             }
         }
     }
 
     //Actualiza los datos en la pantalla para saber el puntaje y demas.
     public void actualizarDatos(String[]jugador){
-        puntaje.setText(jugador[3]);
-        juegosJu.setText(jugador[4]);
-        juegosPer.setText(jugador[6]);
-        juegosGa.setText(jugador[5]);
-        ultimoPuntaje.setText(jugador[7]);
-        nivel.setText(jugador[8]);
+        puntaje.setText(jugador[1]);
+        juegosJu.setText(jugador[2]);
+        juegosPer.setText(jugador[4]);
+        juegosGa.setText(jugador[3]);
+        ultimoPuntaje.setText(jugador[5]);
+        nivel.setText(jugador[6]);
     }
     //Contructor -------------------------------------------------------------------------------------------------------
     public GuiJuego(String[] jugador){
-        escribe = new Escritor();
         player = jugador;
         game = new Logica(player);
         matrizPan = new JPanel();
@@ -271,22 +265,22 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         nivel1.setForeground(Color.BLACK);
         
         
-        nombre = new JLabel(player[2]);
+        nombre = new JLabel(player[0]);
         nombre.setFont(fuente);
         nombre.setForeground(Color.WHITE);
-        puntaje = new JLabel(player[3]);
+        puntaje = new JLabel(player[1]);
         puntaje.setFont(fuente);
         puntaje.setForeground(Color.WHITE);
-        juegosJu = new JLabel(player[4]);
+        juegosJu = new JLabel(player[2]);
         juegosJu.setFont(fuente);
         juegosJu.setForeground(Color.WHITE);
-        juegosGa = new JLabel(player[5]);
+        juegosGa = new JLabel(player[3]);
         juegosGa.setFont(fuente);
         juegosGa.setForeground(Color.WHITE);
-        juegosPer = new JLabel(player[6]);
+        juegosPer = new JLabel(player[4]);
         juegosPer.setFont(fuente);
         juegosPer.setForeground(Color.WHITE);
-        ultimoPuntaje = new JLabel(player[7]);
+        ultimoPuntaje = new JLabel(player[5]);
         ultimoPuntaje.setFont(fuente);
         ultimoPuntaje.setForeground(Color.WHITE);
         nivel = new JLabel("1");
