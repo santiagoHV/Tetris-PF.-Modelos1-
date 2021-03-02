@@ -15,6 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import JuegoTetris.Logica;
+import Modelo.decorator.Casilla;
+import Modelo.decorator.CasillaConcreta;
+import Modelo.decorator.decorators.*;
 
 import java.awt.Font;
 import java.awt.event.KeyEvent;
@@ -155,37 +158,40 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
     public void pintarMatriz(JLabel[][] matriz){
         for(int i = 0; i<matriz.length;i++){
             for(int j = 0; j<matriz[i].length; j++){
-                if(matriz[i][j].getText().equals("0")){
-                    matriz[i][j].setForeground(Color.BLACK);
-                    matriz[i][j].setBackground(Color.BLACK);
-                }
+
+                Casilla casilla = new CasillaConcreta(matriz[i][j]);
+
+                casilla.cambiarColor(Color.BLACK);
+
                 if(matriz[i][j].getText().equals("1") || matriz[i][j].getText().equals("11")){
-                    matriz[i][j].setForeground(Color.YELLOW);
-                    matriz[i][j].setBackground(Color.YELLOW);
+
+                    CasillaDecorator casillaDecorator = new CasillaAmarilla(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
+
                 }
                 if(matriz[i][j].getText().equals("2") || matriz[i][j].getText().equals("12")){
-                    matriz[i][j].setForeground(Color.CYAN);
-                    matriz[i][j].setBackground(Color.CYAN);
+                    CasillaDecorator casillaDecorator = new CasillaCyan(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
                 }
                 if(matriz[i][j].getText().equals("3") || matriz[i][j].getText().equals("13")){
-                    matriz[i][j].setForeground(Color.RED);
-                    matriz[i][j].setBackground(Color.RED);
+                        CasillaDecorator casillaDecorator = new CasillaRoja(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
                 }
                 if(matriz[i][j].getText().equals("4") || matriz[i][j].getText().equals("14")){
-                    matriz[i][j].setForeground(Color.GREEN);
-                    matriz[i][j].setBackground(Color.GREEN);
+                    CasillaDecorator casillaDecorator = new CasillaVerde(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
                 }
                 if(matriz[i][j].getText().equals("5") || matriz[i][j].getText().equals("15")){
-                    matriz[i][j].setForeground(Color.ORANGE);
-                    matriz[i][j].setBackground(Color.ORANGE);
+                    CasillaDecorator casillaDecorator = new CasillaNaranja(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
                 }
                 if(matriz[i][j].getText().equals("6") || matriz[i][j].getText().equals("16")){
-                    matriz[i][j].setForeground(Color.PINK);
-                    matriz[i][j].setBackground(Color.PINK);
+                    CasillaDecorator casillaDecorator = new CasillaRosada(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
                 }
                 if(matriz[i][j].getText().equals("7") || matriz[i][j].getText().equals("17")){
-                    matriz[i][j].setForeground(Color.MAGENTA);
-                    matriz[i][j].setBackground(Color.MAGENTA);
+                    CasillaDecorator casillaDecorator = new CasillaMagenta(casilla);
+                    casillaDecorator.cambiarColor(Color.BLACK);
                 }
             }
         }
