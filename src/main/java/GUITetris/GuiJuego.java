@@ -350,9 +350,9 @@ public class GuiJuego extends JFrame implements ActionListener, KeyListener{
         matrizPan2.setVisible(true);
 
         this.getContentPane().add(jugar);
-        jugar.setBounds( 600 , 450 , 90 , 50 );
+        jugar.setBounds( 600 , 450 , 110 , 50 );
         this.getContentPane().add(pausa);
-        pausa.setBounds( 600 , 550 , 90 , 50 );
+        pausa.setBounds( 600 , 550 , 110 , 50 );
 
 
 
